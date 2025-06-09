@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const Producto = require('../models/productos');
-//const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
 const productosGet = async (req=request, res=response) => {
@@ -39,7 +39,7 @@ const productoGet = async (req=request, res=response) => {
 
 //Crear un producto
 const productoPost = async (req=request, res=response) => {
-    const {precio, categoria, descripcion, img, stock} = req.body;
+    const { categoria, precio,descripcion,fabricante, img, stock} = req.body;
     const nombre = req.body.nombre.toUpperCase();
     const productoDB= await Producto.findOne({nombre});
 
@@ -54,8 +54,8 @@ const productoPost = async (req=request, res=response) => {
         })
     }
 
-    //Generar la data a guardar en DB del producto
-    const data = { nombre, categoria, precio, descripcion, img:imagen, stock,  usuario:req.usuario._id}
+    //Generar los datos a guardar en DB del producto
+    const data = { nombre, categoria, precio, descripcion,fabricante, img:imagen, stock,  usuario:req.usuario._id}
 
     const producto = new Producto(data)
 
@@ -69,9 +69,9 @@ const productoPost = async (req=request, res=response) => {
 }
 
 //Modificar un producto
-const productoPut = async (req, res) => {
+const productoPut = async (req=request, res=response) => {
     const {id} = req.params;
-    const {precio, categoria, descripcion, destacado, img, stock} = req.body;
+    const{precio, categoria, descripcion, destacado, img, stock} = req.body;
 
     const usuario = req.usuario_id;
     
@@ -114,7 +114,7 @@ const productoDelete = async (req, res) => {
     const productoInactivo = await Producto.findByIdAndUpdate(id, {estado: false}, {new:true});
 
     res.json({
-        msg: `El producto ${productoInactivo.nombre} se inactivó`,
+        msg: `El producto ${productoInactivo.nombre} se elimino correctamente`,
         productoInactivo
     });
 };

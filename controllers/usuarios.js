@@ -3,12 +3,12 @@ const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario');
 
 const usuarioGet = async (req = request, res = response) => {
-    const { desde = 0, limite = 5 } = req.query;
-    const query = { estado: true };
+    const {desde = 0, limite = 5} = req.query;
+    const query = {estado: true};
 
     const [total, usuarios] = await Promise.all([
         Usuario.countDocuments(query),
-        Usuario.find(query).skyp(desde).limit(limite)
+        Usuario.find(query).skip(desde).limit(limite)
     ]);
     res.json({
         mensaje: "Usuarios obtenidos",
@@ -66,7 +66,7 @@ const usuarioPut = async (req = request, res = response) => {
         resto.password = bcrypt.hashSync(password, salt);
     }
     //modificacion de los datos
-    resto.correo = correo;
+    resto.email = correo;
     resto.password = password;
     resto.direccion = direccion;
     resto.fechaNacimiento = fechaNacimiento;
@@ -83,7 +83,7 @@ const usuarioPut = async (req = request, res = response) => {
 }
 const usuarioDelete = async (req = request, res = response) => {
     //El usuario no se eliminara, solo se inhabilitara 
-
+    const { id } = req.params;
     //Se obtiene el id del usuario
 
     const usuario = await Usuario.findById(id);

@@ -22,8 +22,10 @@ router.post('/', [
     //notEmpty es para validar que no este vacio 
     check("nombre", "El nombre es obligatorio").notEmpty(),
     check("apellido", "El apellido es obligatorio").notEmpty(),
-    check("correo").custom(emailExiste),
+    check("email").custom(emailExiste),
     check("password", "La contraseña debe tner un minimo de 8 catacteres").isLength({ min: 8 }),
+    check("direccion", "La direccion es obligatoria").notEmpty(),
+    check("fechaNacimiento","La fecha de Naciemiento es obligatoria").notEmpty(),
     check("rol").custom(esRolValido),
     validarCampos
 ], usuarioPost);

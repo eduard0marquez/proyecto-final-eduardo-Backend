@@ -31,7 +31,7 @@ const usuarioExiste = async (id) => {
 
 //Validar si la categoria del producto existe
 const categoriaExiste = async (id) => {
-    const existeCategoria = await categoriaExiste.findById(id)
+    const existeCategoria = await Categoria.findById(id)
     
     if (!existeCategoria) {
         throw new Error(`El id ${id} no corresponde a ninguna categoría registrada`);
@@ -40,7 +40,7 @@ const categoriaExiste = async (id) => {
 
 //Validar si el producto existe
 const productoExiste = async (id) => {
-    const existeProducto=await productoExiste.findById(id)
+    const existeProducto = await Producto.findById(id)
     if (!existeProducto) {
         throw new Error(`el id ${id} no corresponde a ningun producto registrado`);
     }

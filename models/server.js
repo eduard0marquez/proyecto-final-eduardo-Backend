@@ -8,7 +8,6 @@ class Server{
         this.app = express();
         //se obtiene el puerto que esta en el archivo env
         this.port = process.env.PORT;
-        
         this.authPath = '/api/auth';
         this.usuariosPath = '/api/usuarios';
         this.categoriasPath = '/api/categorias';

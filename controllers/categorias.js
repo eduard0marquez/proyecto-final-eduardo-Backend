@@ -9,14 +9,15 @@ const categoriasGet = async (req = request, res = response) => {
     const [total, categorias] = await Promise.all([
         Categoria.countDocuments(query),
         Categoria.find(query)
-            .skyp(desde)
+            .skip(desde)
             .limit(limite)
     ])
 
     res.json({
+        msg:'Categorías obtenidas',
         total,
         categorias,
-        msg:'Categorías obtenidas'
+        
     })
 }
 
@@ -31,8 +32,9 @@ const categoriaGet = async (req = request, res = response) => {
 }
 
 
-    const categoriaPost = async (req = request, res = response) => {
-        const nombre = req.body.nombre.toUpperCase();
+const categoriaPost = async (req = request, res = response) => {
+    const { descripcion } = req.body;
+        const nombre= req.body.nombre.toUpperCase();
 
         //Verificar si la categoria existe
         const categoriaBD = await Categoria.findOne({ nombre });
@@ -44,10 +46,8 @@ const categoriaGet = async (req = request, res = response) => {
         };
 
         //Generar la data que vamos a guardar
-        const data = {
-            nombre,
-            usuario:req.usuario._id
-        }
+        
+        const data = {nombre,descripcion,usuario:req.usuario._id}
         const categoria = new Categoria(data);
         await categoria.save();
 
