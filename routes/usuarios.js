@@ -26,7 +26,6 @@ router.post('/', [
     check("password", "La contraseña debe tner un minimo de 8 catacteres").isLength({ min: 8 }),
     check("direccion", "La direccion es obligatoria").notEmpty(),
     check("fechaNacimiento","La fecha de Naciemiento es obligatoria").notEmpty(),
-    check("rol").custom(esRolValido),
     validarCampos
 ], usuarioPost);
 

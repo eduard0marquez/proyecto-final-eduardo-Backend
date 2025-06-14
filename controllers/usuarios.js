@@ -23,7 +23,7 @@ const usuarioGetID = async (req = request, res = response) => {
     const usuario = await Usuario.findById(id)
     
     res.json({
-        mesanje: "Usuario Obtenido",
+        mesange: "Usuario Obtenido",
         usuario
     })
 }
@@ -33,9 +33,9 @@ const usuarioPost = async (req = request, res = response) => {
     const datos = req.body;
    
     //se destructura lo que viene de datos
-    const { nombre, apellido, email, password, direccion, fechaNacimiento, rol } = datos;
+    const { nombre, apellido, email, password, direccion, fechaNacimiento } = datos;
     //se crea una nueva instancia para que los datos formen parte del modelo
-    const usuario = new Usuario({ nombre, apellido, email, password, direccion, fechaNacimiento, rol });
+    const usuario = new Usuario({ nombre, apellido, email, password, direccion, fechaNacimiento });
     //Encriptar contraseña
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
@@ -43,9 +43,6 @@ const usuarioPost = async (req = request, res = response) => {
 
     //Guardar los datos en la BD
     await usuario.save();
-
-
-
     res.json({
         mensaje: "Usuario cargado correctamente",usuario
         

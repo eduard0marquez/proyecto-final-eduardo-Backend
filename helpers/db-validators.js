@@ -5,11 +5,11 @@ const Producto = require('../models/productos');
 
 
 //validar email
-const emailExiste = async (correo) => {
+const emailExiste = async (email) => {
     //se verifica que el email exista en la base, findOne es para que busque en los datos y con el primero que encuentre ,con eso lo da como validado
-    const existeEmail = await Usuario.findOne({ correo });
+    const existeEmail = await Usuario.findOne({ email });
     if (existeEmail) {
-        throw new Error(`El correo${correo} ya se encuentra en la base de datos`);
+        throw new Error(`El correo ${email} ya se encuentra en la base de datos`);
     }
 }
 
