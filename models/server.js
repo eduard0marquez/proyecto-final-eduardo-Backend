@@ -13,6 +13,7 @@ class Server{
         this.categoriasPath = '/api/categorias';
         this.productosPath = '/api/productos';
         this.rolPath = '/api/rol';
+        //this.favoritosPath = 'api/favorito';
         //Conectar con la base de datos que trae la funcion db Connection
         this.conectarBD();
 
@@ -45,6 +46,7 @@ class Server{
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.categoriasPath, require('../routes/categorias'));
         this.app.use(this.productosPath, require('../routes/productos'));
+        //this.app.use(this.favoritosPath,require('../routes/favoritos'))
         
 
     }

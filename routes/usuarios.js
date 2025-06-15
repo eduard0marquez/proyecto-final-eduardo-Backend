@@ -25,7 +25,8 @@ router.post('/', [
     check("email").custom(emailExiste),
     check("password", "La contraseña debe tner un minimo de 8 catacteres").isLength({ min: 8 }),
     check("direccion", "La direccion es obligatoria").notEmpty(),
-    check("fechaNacimiento","La fecha de Naciemiento es obligatoria").notEmpty(),
+    check("fechaNacimiento", "La fecha de Naciemiento es obligatoria").notEmpty(),
+    check("img","Es necesario ingresar una imagen"),
     validarCampos
 ], usuarioPost);
 

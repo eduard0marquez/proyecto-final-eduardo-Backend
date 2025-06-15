@@ -1,6 +1,7 @@
 const { response, request } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario');
+const cloudinary = require('cloudinary').v2;
 
 const usuarioGet = async (req = request, res = response) => {
     const {desde = 0, limite = 5} = req.query;
@@ -33,9 +34,14 @@ const usuarioPost = async (req = request, res = response) => {
     const datos = req.body;
    
     //se destructura lo que viene de datos
-    const { nombre, apellido, email, password, direccion, fechaNacimiento } = datos;
+    const { nombre, apellido, email, password, direccion, fechaNacimiento, img } = datos;
+    
+//Subir imagen a Cloudinary
+const result = await cloudinary.uploader.upload(img);
+const imagen = result.secure_url;
+     
     //se crea una nueva instancia para que los datos formen parte del modelo
-    const usuario = new Usuario({ nombre, apellido, email, password, direccion, fechaNacimiento });
+    const usuario = new Usuario({ nombre, apellido, email, password, direccion, fechaNacimiento,img:imagen });
     //Encriptar contraseña
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
