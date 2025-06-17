@@ -2,6 +2,7 @@ const Usuario = require('../models/usuario');
 const Rol = require('../models/rol');
 const Categoria = require('../models/categoria_producto');
 const Producto = require('../models/productos');
+const Favoritos = require('../models/favoritos');
 
 
 //validar email
@@ -12,6 +13,8 @@ const emailExiste = async (email) => {
         throw new Error(`El correo ${email} ya se encuentra en la base de datos`);
     }
 }
+
+
 
 //validar rol
 const esRolValido = async (rol)=>{

@@ -4,7 +4,7 @@ const {validarCampos} = require('../middlewares/validarCampos');
 const {validarJWT} = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
 const { categoriaExiste } = require('../helpers/db-validators');
-const { favoritosGet, categoriaGet, categoriaPost, categoriaPut, categoriaDelete } = require('../controllers/favoritos');
+const { favoritosGet, categoriaGet, favoritoPost, categoriaPut, categoriaDelete } = require('../controllers/favoritos');
 
 const router = Router();
 
@@ -16,14 +16,14 @@ router.get('/',[
     router.get('/:id', [
         validarJWT,
         check('id', 'No es un ID válido').isMongoId(),
-        check('id').custom(favoritosExiste),
+        check('id').custom(favoritoExiste),
         validarCampos
     ], 
         favoritosGet);
     
+
         router.post('/', [
             validarJWT,
-            check('producto', 'El producto obligatorio').notEmpty(),
             validarCampos
         ],
-        categoriaPost);
+        favoritoPost);

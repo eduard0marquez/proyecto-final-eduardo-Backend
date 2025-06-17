@@ -5,11 +5,11 @@ const cloudinary = require('cloudinary').v2;
 
 const usuarioGet = async (req = request, res = response) => {
     const {desde = 0, limite = 5} = req.query;
-    const query = {estado: true};
+    const query = {estado: false};
 
     const [total, usuarios] = await Promise.all([
-        Usuario.countDocuments(query),
-        Usuario.find(query).skip(desde).limit(limite)
+        Usuario.countDocuments(),
+        Usuario.find().skip(desde).limit(limite)
     ]);
     res.json({
         mensaje: "Usuarios obtenidos",
