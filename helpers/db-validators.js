@@ -2,7 +2,7 @@ const Usuario = require('../models/usuario');
 const Rol = require('../models/rol');
 const Categoria = require('../models/categoria_producto');
 const Producto = require('../models/productos');
-const Favoritos = require('../models/favoritos');
+const Favorito = require('../models/favoritos');
 
 
 //validar email
@@ -49,10 +49,19 @@ const productoExiste = async (id) => {
     }
 }
 
+//Validar si el producto existe
+const favoritoExiste = async (id) => {
+    const existeFavorito = await Favorito.findById(id)
+    if (!existeFavorito) {
+        throw new Error(`el id ${id} no corresponde a ningun producto registrado`);
+    }
+}
+
 module.exports = {
     esRolValido,
     emailExiste,
     usuarioExiste,
     categoriaExiste,
-    productoExiste
+    productoExiste,
+    favoritoExiste
 }

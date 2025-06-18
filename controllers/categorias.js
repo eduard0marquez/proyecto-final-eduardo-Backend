@@ -23,7 +23,7 @@ const categoriasGet = async (req = request, res = response) => {
 
 const categoriaGet = async (req = request, res = response) => {
     const { id } = req.params;
-    const categoria = await Categoria.findById(id).populate('usuario', 'nombre apellido correo');
+    const categoria = await Categoria.findById(id).populate('usuario', 'nombre apellido email');
 
     res.json({
         msg: 'Categoría obtenida según pedido del usuario',
