@@ -4,7 +4,7 @@ const {validarCampos} = require('../middlewares/validarCampos');
 const {validarJWT} = require('../middlewares/validar-jwt');
 const {esAdminRole} = require('../middlewares/validar-roles');
 const { productoExiste } = require('../helpers/db-validators');
-const { productosGet, productoGet,productosGetAdmin, productoPost, productoPut, productoDelete } = require('../controllers/productos');
+const { productosGet, productoGet, productoPost, productoPut, productoDelete } = require('../controllers/productos');
 
 
 const router = Router();
