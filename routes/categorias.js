@@ -1,57 +1,51 @@
-const { Router } = require('express');
-const { check } = require('express-validator');
-const { usuarioGet, usuarioGetID, usuarioPost, usuarioPut, usuarioDelete } = require('../controllers/usuarios');
-const { emailExiste, esRolValido, usuarioExiste } = require('../helpers/db-validators');
-const { validarCampos } = require('../middlewares/validarCampos');
-const { validarJWT } = require('../middlewares/validar-jwt');
+const {Router} = require('express');
+const {check} = require('express-validator');
+const {validarCampos} = require('../middlewares/validarCampos');
+const {validarJWT} = require('../middlewares/validar-jwt');
 const { esAdminRole } = require('../middlewares/validar-roles');
+const { categoriaExiste } = require('../helpers/db-validators');
+const { categoriasGet, categoriaGet, categoriaPost, categoriaPut, categoriaDelete } = require('../controllers/categorias');
+
 
 const router = Router();
 
-router.get('/',
-    [
-        validarJWT,
-        esAdminRole
-    ],
-    usuarioGet);
+router.get('/',[
+    validarJWT
+],
+categoriasGet);
 
-router.get('/:id',
-    [
-        check("id", "El id no es válido").isMongoId(),
-        check("id").custom(usuarioExiste),
-        validarCampos
-    ],
-    usuarioGetID);
+router.get('/:id', [
+    validarJWT,
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom(categoriaExiste),
+    validarCampos
+], 
+categoriaGet);
 
-router.post('/',
-    [
-        check("nombre", "El nombre es obligatorio").notEmpty(),
-        check("apellido", "El apellido es obligatorio").notEmpty(),
-        check("correo").custom(emailExiste),
-        check("password", "La contraseña debe tener un mínmo de 6 caracteres").isLength({ min: 6 }),
-        check("rol").custom(esRolValido),
-        validarCampos
-    ],
-    usuarioPost);
+router.post('/', [
+    validarJWT,
+    esAdminRole,
+    check('nombre', 'El nombre es obligatorio').notEmpty(),
+    validarCampos
+],
+categoriaPost);
 
-router.put('/:id',
-    [
-        validarJWT,
-        check("id", "No es un ID válido").isMongoId(),
-        check("id").custom(usuarioExiste),
-       
-        validarCampos
-    ],
-    usuarioPut);
+router.put('/:id', [
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un Id válido').isMongoId(),
+    check('id').custom(categoriaExiste),
+    validarCampos
+],
+categoriaPut);
 
-router.delete('/:id',
-    [
-        validarJWT,
-        esAdminRole,
-        check("id", "No es un ID válido").isMongoId(),
-        check("id").custom(usuarioExiste),
-        validarCampos
-    ],
-    usuarioDelete);
+router.delete('/:id', [
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un Id válido').isMongoId(),
+    check('id').custom(categoriaExiste),
+    validarCampos
+],
+categoriaDelete);
 
-module.exports = router;
+module.exports = router
