@@ -9,7 +9,8 @@ cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.API_KEY_CLOUDIMARY,
     api_secret: process.env.API_SECRET_CLOUDINARY,
-    secure:true
+    secure: true
+
 })
 
 //se crea una constante (objeto )nueva de la funcion server que ya pertenerce al archivo server
