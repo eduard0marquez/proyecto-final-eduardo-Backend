@@ -2,28 +2,13 @@ const { response, request } = require('express');
 
 //Importar los modelos
 
-const Categoria = require('../models/categoria_producto');
 const Producto = require('../models/productos');
 
 //Definir las colecciones permitidas 
-const coleccionesPermitidas = [ 'categorias', 'productos'];
+const coleccionesPermitidas = [ 'productos'];
 
 
 
-//Buscar Categorias
-const buscarCategorias = async (termino, res = response) => {
-    const regex = new RegExp(termino, "i");
-
-    const categorias = await Categoria.find({
-        nombre: regex,
-        estado: true
-    });
-
-    res.json({
-        msg: 'Categorías encontradas:',
-        results: categorias,
-    })
-}
 
 //Buscar Productos
 const buscarProductos = async (termino, res = response) => {
@@ -53,12 +38,7 @@ const buscar = (req = request, res = response) => {
 
     //En función de la colección, buscar por el termino
     switch (coleccion) {
-        case 'usuarios':
-            buscarUsuarios(termino, res);
-            break;
-        case 'categorias':
-            buscarCategorias(termino, res);
-            break;
+        
         case 'productos':
             buscarProductos(termino, res);
             break;
