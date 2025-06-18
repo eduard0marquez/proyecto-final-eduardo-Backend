@@ -8,13 +8,12 @@ const { favoritesGet, favoritesPost, favoritesDelete } = require('../controllers
 
 const router = Router();
 
-router.get('/', favoritesGet);
-
+router.get('/:id', favoritesGet);
 
 router.post('/',
     [
         validarJWT,
-        check('nombre', 'El nombre es obligatorio').notEmpty(),
+        
         validarCampos
     ],
     favoritesPost

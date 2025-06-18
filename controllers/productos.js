@@ -1,10 +1,11 @@
 const { response, request } = require('express');
 const Producto = require('../models/productos');
+const usuario = require('../models/usuario');
 const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
 const productosGet = async (req=request, res=response) => {
-    const {desde = 0, limite = 5} = req.query;
+    const {desde = 0, limite = 15} = req.query;
     const query = {estado: true};
 
     const [total, productos] = await Promise.all([
@@ -41,23 +42,21 @@ const productoGet = async (req=request, res=response) => {
 
 //Crear un producto
 const productoPost = async (req=request, res=response) => {
-    const { categoria, precio,descripcion,fabricante, img, stock} = req.body;
+    const {categoria, precio,descripcion,fabricante, img, stock,favorito,compra} = req.body;
     const nombre = req.body.nombre.toUpperCase();
-    const productoDB= await Producto.findOne({nombre});
+    const productoDB = await Producto.findOne({ nombre });
+    const usuarioDB= await Producto.findOne({usuario});
 
-    //Subir imagen a Cloudinary
-    const result = await cloudinary.uploader.upload(img);
-    const imagen = result.secure_url;
 
     //validar si el producto existe
-    if(productoDB){
+    if(productoDB&&usuarioDB){
         return res.status(400).json({
             msg: `El producto ${productoDB.nombre} ya existe`,
         })
     }
 
     //Generar los datos a guardar en DB del producto
-    const data = { nombre, categoria, precio, descripcion,fabricante, img:imagen, stock,  usuario:req.usuario._id}
+    const data = { nombre, categoria, precio, descripcion,fabricante, img, stock,favorito,compra,  usuario:req.usuario._id}
 
     const producto = new Producto(data)
 

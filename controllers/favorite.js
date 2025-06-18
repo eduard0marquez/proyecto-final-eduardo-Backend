@@ -29,23 +29,22 @@ const favoritesGet = async (req=request, res=response) => {
 
 
 
-//Crear un producto
+//Crear un favorito
 const favoritesPost = async (req=request, res=response) => {
     const {producto} = req.body;
-    const nombre = req.body.nombre.toUpperCase();
-    const favoritosDB= await Favorito.findOne({nombre});
+    const favoritosDB= await Favorito.findOne(producto);
 
     
 
-    //validar si el producto existe
+    //validar si el 
     if(favoritosDB){
         return res.status(400).json({
-            msg: `El producto ${favoritosDB.nombre} ya existe`,
+            msg: `El producto ${favoritosDB.id} ya existe`,
         })
     }
 
     //Generar los datos a guardar en DB del producto
-    const data = { nombre, producto,  usuario:req.usuario._id}
+    const data = { producto,  usuario:usuario._id}
 
     const favorito = new Favorito(data)
 
