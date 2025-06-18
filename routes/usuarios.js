@@ -10,8 +10,7 @@ const router = Router();
 router.get('/', [
     validarJWT,
     esAdminRole
-],
-    usuarioGet);
+],usuarioGet);
 
 router.get('/:id', [
     check("id", "El id no es válido").isMongoId(),

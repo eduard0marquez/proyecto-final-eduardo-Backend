@@ -23,6 +23,8 @@ const productosGet = async (req=request, res=response) => {
     })
 };
 
+
+
 //Get para traer un producto por ID
 const productoGet = async (req=request, res=response) => {
     const {id} = req.params;
