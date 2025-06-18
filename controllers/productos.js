@@ -11,8 +11,7 @@ const productosGet = async (req=request, res=response) => {
     const [total, productos] = await Promise.all([
         Producto.countDocuments(query),
         Producto.find(query)
-            .skip(Number(desde))
-            .limit(Number(limite))
+            
      /*        .populate('usuario','correo') */
             .populate('categoria', 'nombre'),
     ]);
