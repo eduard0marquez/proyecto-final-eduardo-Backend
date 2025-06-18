@@ -5,7 +5,7 @@ const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
 const productosGet = async (req=request, res=response) => {
-    const {desde = 0, limite = 15} = req.query;
+
     const query = {estado: true};
 
     const [total, productos] = await Promise.all([
