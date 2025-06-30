@@ -44,18 +44,20 @@ const productoPost = async (req=request, res=response) => {
     const {categoria, precio,descripcion,fabricante, img, stock,favorito,compra} = req.body;
     const nombre = req.body.nombre.toUpperCase();
     const productoDB = await Producto.findOne({ nombre });
-    const usuarioDB= await Producto.findOne({usuario});
-
+   
+//Subir imagen a Cloudinary
+const result = await cloudinary.uploader.upload(img);
+const imagen = result.secure_url;
 
     //validar si el producto existe
-    if(productoDB&&usuarioDB){
+    if(productoDB){
         return res.status(400).json({
             msg: `El producto ${productoDB.nombre} ya existe`,
         })
     }
 
     //Generar los datos a guardar en DB del producto
-    const data = { nombre, categoria, precio, descripcion,fabricante, img, stock,favorito,compra,  usuario:req.usuario._id}
+    const data = { nombre, categoria, precio, descripcion,fabricante, img:imagen, stock,favorito,compra,  usuario:req.usuario._id}
 
     const producto = new Producto(data)
 

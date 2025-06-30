@@ -12,7 +12,7 @@ const favoritesGet = async (req=request, res=response) => {
         Favorito.find()
             
      /*        .populate('usuario','correo') */
-            .populate('producto','nombre'),
+            .populate('producto')
              
         
             
@@ -72,13 +72,13 @@ const favoritesPost = async (req = request, res = response) => {
 
 
 //Inhabilitar un producto
-const favoritesDelete = async (req, res) => {
+const favoritesDelete = async (req = request, res = response) => {
     const {id} = req.params;
 
-    const productoInactivo = await Producto.findByIdAndUpdate(id, {estado: false}, {new:true});
+    const eliminar= await Producto.findByIdAndDelete(id);
 
     res.json({
-        msg: `El producto ${productoInactivo} se elimino correctamente`,
+        msg: `El producto ${eliminar} se elimino correctamente`,
         productoInactivo
     });
 };
