@@ -41,7 +41,7 @@ const productoGet = async (req=request, res=response) => {
 
 //Crear un producto
 const productoPost = async (req=request, res=response) => {
-    const {categoria, precio,descripcion,fabricante, img, stock,favorito,compra} = req.body;
+    const {categoria,descripcion, precio,fabricante, img, stock,favorito,compra} = req.body;
     const nombre = req.body.nombre.toUpperCase();
     const productoDB = await Producto.findOne({ nombre });
    

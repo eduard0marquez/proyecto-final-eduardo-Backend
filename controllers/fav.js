@@ -48,7 +48,7 @@ const favoritesPost = async (req = request, res = response) => {
 
         if (favoritoExistente) {
             return res.status(400).json({
-                msg: 'Este producto ya está en favoritos.',
+                msg: 'Este articulo ya está en favoritos.',
                 favorito: favoritoExistente,
             });
         }
@@ -71,7 +71,7 @@ const favoritesPost = async (req = request, res = response) => {
 };
 
 
-//Inhabilitar un producto
+//Eliminar un producto
 const favoritesDelete = async (req = request, res = response) => {
     const {id} = req.params;
 
