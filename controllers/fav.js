@@ -4,8 +4,31 @@ const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
 const favoritesGet = async (req = request, res = response) => {
-    const  {id}  = req.params
+    const { id } = req.params
     const query = {favorit: true, usuario:id};
+    
+    const [total, favoritos] = await Promise.all([
+        Favorito.countDocuments(query),
+        Favorito.find(query)
+            
+     /*        .populate('usuario','correo') */
+            .populate('producto')
+             
+        
+            
+    ]);
+
+    res.json({
+
+        msg: 'Favoritos obtenidos'+id,
+        total,
+        favoritos,
+    })
+};
+//Get para traer todos los productos
+const shopGet = async (req = request, res = response) => {
+    const  {usuar}  = req.params
+    const query = {compra: true, usuario:usuar};
     
     const [total, favoritos] = await Promise.all([
         Favorito.countDocuments(query),
@@ -86,6 +109,7 @@ const favoritesDelete = async (req = request, res = response) => {
 
 module.exports = {
     favoritesGet,
+    shopGet,
     favoritesPost,
     favoritesDelete
 };
