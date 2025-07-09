@@ -3,10 +3,10 @@ const Favorito = require('../models/fav');
 const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
-const favoritesGet = async (req=request, res=response) => {
+const favoritesGet = async (req = request, res = response) => {
+    const  {id}  = req.params
+    const query = {favorit: true, usuario:id};
     
-    const query = {favorit: true};
-
     const [total, favoritos] = await Promise.all([
         Favorito.countDocuments(query),
         Favorito.find(query)
@@ -19,7 +19,8 @@ const favoritesGet = async (req=request, res=response) => {
     ]);
 
     res.json({
-        msg: 'Favoritos obtenidos',
+
+        msg: 'Favoritos obtenidos'+id,
         total,
         favoritos,
     })
