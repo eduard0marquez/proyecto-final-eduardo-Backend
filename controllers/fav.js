@@ -73,6 +73,35 @@ const favoritesPost = async (req = request, res = response) => {
 };
 
 
+//Modificar favorito
+const favPut = async (req=request, res=response) => {
+    const {id} = req.params;
+    const{favorit,compra } = req.body;
+
+    const usuario = req.usuario_id;
+    
+
+    let data ={
+        favorit,compra
+    };
+
+    
+
+    const producto = await Favorito.findByIdAndUpdate(id, data);
+
+    res.status(201).json({
+        msg: 'El Articulo se actualizo correctamente',
+        producto
+    });
+}
+
+
+
+
+
+
+
+
 //Eliminar un producto
 const favoritesDelete = async (req = request, res = response) => {
     const { id } = req.params;
@@ -87,5 +116,6 @@ const favoritesDelete = async (req = request, res = response) => {
 module.exports = {
     favoritesGet,
     favoritesPost,
+    favPut,
     favoritesDelete
 };

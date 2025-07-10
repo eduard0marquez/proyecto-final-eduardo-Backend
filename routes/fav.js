@@ -3,7 +3,7 @@ const {check} = require('express-validator');
 const {validarCampos} = require('../middlewares/validarCampos');
 const {validarJWT} = require('../middlewares/validar-jwt');
 const { favoritoExiste } = require('../helpers/db-validators');
-const { favoritesGet, favoritesPost, favoritesDelete} = require('../controllers/fav');
+const { favoritesGet, favoritesPost, favoritesDelete,favPut} = require('../controllers/fav');
 
 
 const router = Router();
@@ -20,7 +20,13 @@ router.post('/',
     favoritesPost
 );
 
-
+router.put('/:id', 
+    [
+        validarJWT,
+        
+    ],
+    favPut
+);
 
 router.delete('/:id',
     [
