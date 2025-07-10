@@ -26,6 +26,29 @@ const favoritesGet = async (req = request, res = response) => {
     })
 };
 
+//Get para traer todos los productos de compra
+const compraGet = async (req = request, res = response) => {
+    const { id } = req.params
+   
+    const query = {compra: true, usuario:id};
+    
+    const [total, favoritos] = await Promise.all([
+        Favorito.countDocuments(query),
+        Favorito.find(query)
+            
+     /*        .populate('usuario','correo') */
+            .populate('producto')
+             
+        
+            
+    ]);
+
+    res.json({
+        msg: 'Articulos para compra obtenidos',
+        total,
+        favoritos,
+    })
+};
 
  
 
@@ -115,6 +138,7 @@ const favoritesDelete = async (req = request, res = response) => {
 
 module.exports = {
     favoritesGet,
+    compraGet,
     favoritesPost,
     favPut,
     favoritesDelete
