@@ -25,31 +25,9 @@ const favoritesGet = async (req = request, res = response) => {
         favoritos,
     })
 };
-//Get para traer todos los productos
-const shopGet = async (req = request, res = response) => {
-    const  {usuar}  = req.params
-    const query = {compra: true, usuario:usuar};
-    
-    const [total, favoritos] = await Promise.all([
-        Favorito.countDocuments(query),
-        Favorito.find(query)
-            
-     /*        .populate('usuario','correo') */
-            .populate('producto')
-             
-        
-            
-    ]);
-
-    res.json({
-
-        msg: 'Favoritos obtenidos'+id,
-        total,
-        favoritos,
-    })
-};
 
 
+ 
 
 
 //Crear un favorito
@@ -97,19 +75,17 @@ const favoritesPost = async (req = request, res = response) => {
 
 //Eliminar un producto
 const favoritesDelete = async (req = request, res = response) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
-    const eliminar= await Producto.findByIdAndDelete(id);
+    const eliminar= await Favorito.findByIdAndDelete(id);
 
     res.json({
-        msg: `El producto ${eliminar} se elimino correctamente`,
-        productoInactivo
+        msg: `El articulo se quito correctamente de favoritos`
     });
 };
 
 module.exports = {
     favoritesGet,
-    shopGet,
     favoritesPost,
     favoritesDelete
 };
