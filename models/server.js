@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const { MercadoPagoConfig, Preference }=require('mercadopago') ;
 
 class Server{
     constructor() {
@@ -17,6 +18,7 @@ class Server{
         this.buscarPath = '/api/buscar';
         //this.favoritesPath = '/api/favorite';
         this.favoritoPath = '/api/favorite';
+        this.mercadoPath = '/api/mercado';
         
         //Conectar con la base de datos que trae la funcion db Connection
         this.conectarBD();
@@ -53,6 +55,8 @@ class Server{
         //this.app.use(this.favoritosPath, require('../routes/favoritos'));
         this.app.use(this.buscarPath, require('../routes/buscar'));
         this.app.use(this.favoritoPath, require('../routes/fav'));
+        this.app.use(this.mercadoPath, require('../routes/mercado'));
+        
        // this.app.use(this.favoritesPath, require('../routes/favorite'));
         
     }
