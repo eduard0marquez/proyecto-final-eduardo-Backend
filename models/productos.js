@@ -1,4 +1,5 @@
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
+const  mongoosePaginate  =require('mongoose-paginate-v2')
 
 const ProductoSchema = Schema({
     nombre: {type: String, required: [true, 'El nombre es obligatorio'], unique:true},
@@ -13,5 +14,6 @@ const ProductoSchema = Schema({
     usuario: {type: Schema.Types.ObjectId, ref: 'Usuario', required: true},
     categoria: {type: Schema.Types.ObjectId, ref: 'Categoria', required: true}
 })
+ProductoSchema.plugin(mongoosePaginate)
 
 module.exports = model ('Producto', ProductoSchema);

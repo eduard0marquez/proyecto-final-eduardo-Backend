@@ -1,25 +1,29 @@
 const { response, request } = require('express');
 const Producto = require('../models/productos');
 const usuario = require('../models/usuario');
+const { Error } = require('mongoose');
+const { populate } = require('dotenv');
 const cloudinary = require('cloudinary').v2;
 
 //Get para traer todos los productos
-const productosGet = async (req=request, res=response) => {
-    const { desde = 0, limite = 5 } = req.query;
+const productosGet = async (req = request, res = response) => {
+    const {pagina=1, limite=5} = req.query;
+    const options = {page:pagina, limit: limite, populate: { path:'categoria',select:'nombre' }  };
     const query = {estado: true};
 
     const [total, productos] = await Promise.all([
         Producto.countDocuments(query),
-        Producto.find(query).skip(desde).limit(limite)
+        Producto.paginate(query, options),
             
      /*        .populate('usuario','correo') */
-            .populate('categoria', 'nombre'),
+            /*.populate('categoria', 'nombre'),*/
     ]);
 
     res.json({
         msg: 'Productos obtenidos',
         total,
         productos,
+        
     })
 };
 
