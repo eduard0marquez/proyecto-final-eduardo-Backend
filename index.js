@@ -20,9 +20,6 @@ cloudinary.config({
 //credenciales para mercado pago
 
 
-const mercadopago= new MercadoPagoConfig({
-     access_token: process.env.ACCESS_TOKE,
-})
 
 
 
