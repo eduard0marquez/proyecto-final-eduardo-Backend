@@ -58,14 +58,16 @@ const categoriaPost = async (req = request, res = response) => {
 
     }
     
-    const categoriaPut = async (req = request, res = response) => {
+const categoriaPut = async (req = request, res = response) => {
+    const { descripcion } = req.body;
         const { id } = req.params;
         const nombre = req.body.nombre.toUpperCase();
         const usuario = req.usuario._id;
 
         const data = {
             nombre,
-            usuario
+            usuario,
+            descripcion
         }
 
         const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true });
